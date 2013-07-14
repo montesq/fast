@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('myApp', ['auth','menu', 'ui.bootstrap.dropdownToggle']).
+var app = angular.module('myApp', ['auth','menu', 'clients']).
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
   }]);

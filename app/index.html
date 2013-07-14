@@ -13,8 +13,10 @@
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/bootstrap.css">
     <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+        <!-- endbuild -->
+    <link rel="stylesheet" type="text/css" href="http://angular-ui.github.com/ng-grid/css/ng-grid.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
     <script src="https://login.persona.org/include.js"></script>
 </head>
 <body ng-app="myApp">
@@ -36,8 +38,7 @@
                 <ul class="nav" ng-repeat="menuItem in menu | orderBy:'order'">
                     <li class="dropdown">
                         <a ng-show="!menuItem.childs"
-                           href="{{menuItem.url}}"
-                           class="dropdown-toggle">{{menuItem.label}}
+                           href="{{menuItem.url}}">{{menuItem.label}}
                         </a>
                         <a ng-show="menuItem.childs"
                            href="#"
@@ -67,14 +68,20 @@
     </div><!-- /navbar-inner -->
 </div>
 
+<div ng-view>
+
+</div>
+
 <!-- build:js scripts/plugins.js -->
 <script src="bower_components/angular-ui-bootstrap/src/dropdownToggle/dropdownToggle.js"></script>
+<script type="text/javascript" src="http://angular-ui.github.com/ng-grid/lib/ng-grid.debug.js"></script>
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/auth.js"></script>
 <script src="scripts/controllers/menu.js"></script>
+<script src="scripts/controllers/clients.js"></script>
 <!-- endbuild -->
 
 
