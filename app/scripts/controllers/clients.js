@@ -3,11 +3,17 @@
 var app = angular.module('clients', ['ngGrid']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
-        when('/clients', {templateUrl: 'views/clients/list.html', controller: 'ClientsListCtrl'}).
-        otherwise({redirectTo:'/'});
-//        when('/clients/add', {templateUrl: 'views/clients/add.html', controller: 'clientsAddCtrl'}).
-//        when('/clients/:id', {templateUrl: 'views/clients/detail.html', controller: 'clientDetailCtrl'});
-}]);
+        when('/clients', {templateUrl: '/views/clients/list.html', controller: 'ClientsListCtrl'}).
+        when('/clients/add', {templateUrl: '/views/clients/detail.html', controller: 'clientAddCtrl'}).
+        when('/clients/:id', {
+            templateUrl: '/views/clients/detail.html', controller: 'clientDetailCtrl',
+            resolve: {
+                account: function(Restangular, $route){
+                    return Restangular.one('accounts', $route.current.params.id).get();
+                }
+            }
+        });
+    }]);
 
 app.controller('ClientsListCtrl', function($scope, Restangular) {
     $scope.myData = Restangular.all("accounts").getList();
@@ -37,5 +43,24 @@ app.controller('ClientsListCtrl', function($scope, Restangular) {
         enableRowSelection: false,
         showFooter: true,
         showFilter: true
+    };
+});
+
+app.controller('clientAddCtrl', function($scope, $location, Restangular) {
+    $scope.save = function() {
+        Restangular.all('accounts').post($scope.account).then(function() {
+            $location.path('/clients');
+        });
+    };
+});
+
+app.controller('clientDetailCtrl', function($scope, $location, account, Restangular) {
+    var original = account;
+    $scope.account = Restangular.copy(original);
+
+    $scope.save = function() {
+        $scope.account.put().then(function() {
+            $location.path('/clients');
+        });
     };
 });

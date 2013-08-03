@@ -1,0 +1,27 @@
+<form name="clientDetailForm" class="form-horizontal">
+       <fieldset>
+           <legend>Client</legend>
+           <div class="control-group">
+               <label class="control-label" for="name">Nom</label>
+               <div class="controls">
+                   <input type="text" id="name" name="name" ng-model="account.name" value="Test" required>
+                   <span class="help-inline error" ng-show="clientDetailForm.name.$error.required">
+                       Obligatoire
+                   </span>
+               </div>
+           </div>
+
+           <div class="control-group">
+               <label class="control-label" for="contacts">Contacts</label>
+               <div class="controls">
+                   <textarea id="contacts" rows="4" ng-model="account.contacts" ng-list>
+                   </textarea>
+                   <span class="help-block">Saisir les emails séparés par une virgule (,)</span>
+               </div>
+           </div>
+       </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" ng-click="save()">Enregistrer</button>
+            <a href="/clients" class="btn">Annuler</a>
+        </div>
+</form>

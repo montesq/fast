@@ -7,10 +7,10 @@ var app = angular.module('myApp', ['auth','menu', 'clients', 'restangular']).
           function($routeProvider, $locationProvider, RestangularProvider) {
     $locationProvider.html5Mode(true);
 
-    RestangularProvider.setBaseUrl('http://localhost:9000/api');
+    RestangularProvider.setBaseUrl('https://localhost:9443/api');
     RestangularProvider.setRestangularFields({id: '_id'});
   }]);
 
 app.run(function($rootScope) {
-  $rootScope.sterapiServer = "http://localhost:9000"
+  $rootScope.sterapiServer = "https://localhost:9443"
 });
