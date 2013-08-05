@@ -1,10 +1,11 @@
 <form name="clientDetailForm" class="form-horizontal">
        <fieldset>
+           {{account}}
            <legend>Client</legend>
            <div class="control-group">
                <label class="control-label" for="name">Nom</label>
                <div class="controls">
-                   <input type="text" id="name" name="name" ng-model="account.name" value="Test" required>
+                   <input type="text" id="name" name="name" ng-model="account.name" required>
                    <span class="help-inline error" ng-show="clientDetailForm.name.$error.required">
                        Obligatoire
                    </span>
@@ -12,11 +13,17 @@
            </div>
 
            <div class="control-group">
-               <label class="control-label" for="contacts">Contacts</label>
+               <label class="control-label">Contacts: </label>
                <div class="controls">
-                   <textarea id="contacts" rows="4" ng-model="account.contacts" ng-list>
-                   </textarea>
-                   <span class="help-block">Saisir les emails séparés par une virgule (,)</span>
+                   <ul>
+                       <li ng-repeat="contact in account.contacts">
+                           <input ng-model="contact.email">
+                           [<a href ng-click="account.contacts.splice($index, 1)">X</a>]
+                       </li>
+                       <li>
+                           [<a href ng-click="account.contacts.push({})">add</a>]
+                       </li>
+                   </ul>
                </div>
            </div>
        </fieldset>

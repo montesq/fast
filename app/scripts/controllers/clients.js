@@ -4,9 +4,9 @@ var app = angular.module('clients', ['ngGrid']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
         when('/clients', {templateUrl: '/views/clients/list.html', controller: 'ClientsListCtrl'}).
-        when('/clients/add', {templateUrl: '/views/clients/detail.html', controller: 'clientAddCtrl'}).
+        when('/clients/add', {templateUrl: '/views/clients/detail.html', controller: 'ClientAddCtrl'}).
         when('/clients/:id', {
-            templateUrl: '/views/clients/detail.html', controller: 'clientDetailCtrl',
+            templateUrl: '/views/clients/detail.html', controller: 'ClientDetailCtrl',
             resolve: {
                 account: function(Restangular, $route){
                     return Restangular.one('accounts', $route.current.params.id).get();
@@ -27,12 +27,12 @@ app.controller('ClientsListCtrl', function($scope, Restangular) {
         {
             field: 'contacts',
             displayName: 'Contacts',
-            cellTemplate: '<ul><li ng-repeat="contact in row.getProperty(col.field)">{{contact}}</li></ul>'
+            cellTemplate: '<ul><li ng-repeat="contact in row.getProperty(col.field)">{{contact.email}}</li></ul>'
         },
         {
             field: 'modified_on',
             displayName: 'Dernière modif',
-            cellTemplate: '<span>{{row.getProperty(col.field)| date:"shortDate"}}</span>'
+            cellFilter: 'date:"shortDate"'
         }
     ];
 
@@ -46,7 +46,9 @@ app.controller('ClientsListCtrl', function($scope, Restangular) {
     };
 });
 
-app.controller('clientAddCtrl', function($scope, $location, Restangular) {
+app.controller('ClientAddCtrl', function($scope, $location, Restangular) {
+    $scope.account = {};
+    $scope.account.contacts = [];
     $scope.save = function() {
         Restangular.all('accounts').post($scope.account).then(function() {
             $location.path('/clients');
@@ -54,7 +56,7 @@ app.controller('clientAddCtrl', function($scope, $location, Restangular) {
     };
 });
 
-app.controller('clientDetailCtrl', function($scope, $location, account, Restangular) {
+app.controller('ClientDetailCtrl', function($scope, $location, account, Restangular) {
     var original = account;
     $scope.account = Restangular.copy(original);
 
