@@ -6,7 +6,8 @@ var app = angular.module('clients', ['ngGrid']).
         when('/clients', {templateUrl: '/views/clients/list.html', controller: 'ClientsListCtrl'}).
         when('/clients/add', {templateUrl: '/views/clients/detail.html', controller: 'ClientAddCtrl'}).
         when('/clients/:id', {
-            templateUrl: '/views/clients/detail.html', controller: 'ClientDetailCtrl',
+            templateUrl: '/views/clients/detail.html',
+            controller: 'ClientDetailCtrl',
             resolve: {
                 account: function(Restangular, $route){
                     return Restangular.one('accounts', $route.current.params.id).get();
@@ -16,7 +17,7 @@ var app = angular.module('clients', ['ngGrid']).
     }]);
 
 app.controller('ClientsListCtrl', function($scope, Restangular) {
-    $scope.myData = Restangular.all("accounts").getList();
+    $scope.myData = Restangular.all('accounts').getList();
 
     $scope.columnsDef = [
         {

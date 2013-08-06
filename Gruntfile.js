@@ -1,7 +1,8 @@
-// Generated on 2013-06-29 using generator-angular 0.3.0
+// Generated on 2013-08-05 using generator-angular 0.3.1
 'use strict';
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
+var modRewrite = require('connect-modrewrite');
 var mountFolder = function (connect, dir) {
   return connect.static(require('path').resolve(dir));
 };
@@ -15,7 +16,6 @@ var mountFolder = function (connect, dir) {
 module.exports = function (grunt) {
   // load all grunt tasks
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-  var modRewrite = require('connect-modrewrite');
 
   // configurable paths
   var yeomanConfig = {
@@ -60,10 +60,10 @@ module.exports = function (grunt) {
         options: {
           middleware: function (connect) {
             return [
-              lrSnippet,
               modRewrite([
-                    '!\\.html|\\.js|\\.css|\\woff|\\ttf|\\swf$ /index.html'
+                '!\\.html|\\.js|\\.css|\\.png$ /index.html [L]'
               ]),
+              lrSnippet,
               mountFolder(connect, '.tmp'),
               mountFolder(connect, yeomanConfig.app)
             ];
@@ -177,6 +177,16 @@ module.exports = function (grunt) {
         }]
       }
     },
+    svgmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/images',
+          src: '{,*/}*.svg',
+          dest: '<%= yeoman.dist %>/images'
+        }]
+      }
+    },
     cssmin: {
       // By default, your `index.html` <!-- Usemin Block --> will take care of
       // minification. This option is pre-configured if you do not wish to use
@@ -223,7 +233,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             'bower_components/**/*',
-            'images/{,*/}*.{gif,webp,svg}',
+            'images/{,*/}*.{gif,webp}',
             'styles/fonts/*'
           ]
         }, {
@@ -246,6 +256,7 @@ module.exports = function (grunt) {
       dist: [
         'coffee',
         'imagemin',
+        'svgmin',
         'htmlmin'
       ]
     },

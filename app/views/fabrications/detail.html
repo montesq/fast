@@ -1,0 +1,68 @@
+<form name="fabricationDetailForm" class="form-horizontal">
+       <fieldset>
+           <legend>Fabrication</legend>
+
+           <div class="control-group">
+               <label class="control-label" for="client">Client</label>
+               <div class="controls">
+                   <select id="client"
+                           name="client"
+                           ng-options="c._id as c.name for c in clients"
+                           ng-model="fabrication.client"
+                           required
+                           >
+                   </select>
+                   <span class="help-inline error" ng-show="fabricationDetailForm.client.$error.required">
+                       Obligatoire
+                   </span>
+               </div>
+           </div>
+
+           <div class="control-group">
+               <label class="control-label" for="clientOrderId">N° de commande</label>
+               <div class="controls">
+                   <input id="clientOrderId" class="input-small" type="text" ng-model="fabrication.clientOrderId">
+               </div>
+           </div>
+
+           <div class="control-group">
+               <label class="control-label" for="fabStartDate">Date début fabrication</label>
+               <div class="controls">
+                   <input id="fabStartDate" class="input-small" type="text" ng-model="fabStartDate" ui-date>
+                   <input id="fabStartHour" class="input-mini" type="text" ng-model="fabStartHour"
+                          placeholder="HH" pattern="[0-9]{2}">
+               </div>
+           </div>
+
+           <div class="control-group">
+               <label class="control-label" for="fabEndDate">Date fin fabrication</label>
+               <div class="controls">
+                   <input id="fabEndDate" class="input-small" type="text" ng-model="fabEndDate" ui-date>
+                   <input id="fabEndHour" class="input-mini" type="text" ng-model="fabEndHour"
+                          placeholder="HH" pattern="[0-9]{2}">
+
+               </div>
+           </div>
+
+           <div class="control-group">
+               <label class="control-label" for="steDate">Date stérilisation</label>
+               <div class="controls">
+                   <input id="steDate" class="input-small" type="text" ng-model="steDate" ui-date>
+                   <input id="steHour" class="input-mini" type="text" ng-model="steHour"
+                          placeholder="HH" pattern="[0-9]{2}">
+               </div>
+           </div>
+
+           <div class="control-group" ng-show="fabrication._id">
+               <label class="control-label" for="fabAttachment">Dossier de fabrication</label>
+               <div class="controls">
+                   <input id="fabAttachment" type="file" ng-model="fabAttachment">
+               </div>
+           </div>
+
+       </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" ng-click="save()">Enregistrer</button>
+            <a href="/clients" class="btn">Annuler</a>
+        </div>
+</form>

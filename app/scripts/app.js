@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('myApp', ['auth','menu', 'clients', 'restangular']).
+var app = angular.module('myApp', ['auth', 'menu', 'clients', 'fabrications', 'restangular']).
   config(['$routeProvider',
           '$locationProvider',
           'RestangularProvider',
@@ -12,5 +12,6 @@ var app = angular.module('myApp', ['auth','menu', 'clients', 'restangular']).
   }]);
 
 app.run(function($rootScope) {
-  $rootScope.sterapiServer = "https://localhost:9443"
+  $rootScope.sterapiServer = 'https://localhost:9443';
 });
+
