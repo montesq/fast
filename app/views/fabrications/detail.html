@@ -2,13 +2,20 @@
        <fieldset>
            <legend>Fabrication</legend>
 
+           <div class="control-group" ng-show="fabrication._id">
+               <label class="control-label" for="id">N° ordre</label>
+               <div class="controls">
+                   <input id="id" name="id" ng-model="fabrication._id" disabled>
+               </div>
+           </div>
+
            <div class="control-group">
                <label class="control-label" for="client">Client</label>
                <div class="controls">
                    <select id="client"
                            name="client"
-                           ng-options="c._id as c.name for c in clients"
-                           ng-model="fabrication.client"
+                           ng-options="c._id as c.name for c in clients | orderBy:'name'"
+                           ng-model="fabrication.client._id"
                            required
                            >
                    </select>
@@ -56,7 +63,7 @@
            <div class="control-group" ng-show="fabrication._id">
                <label class="control-label" for="fabAttachment">Dossier de fabrication</label>
                <div class="controls">
-                   <input id="fabAttachment" type="file" ng-model="fabAttachment">
+                   <input id="fabAttachment" type="file" onchange="scope.setFile(this)">
                </div>
            </div>
 

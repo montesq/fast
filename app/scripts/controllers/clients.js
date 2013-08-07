@@ -23,7 +23,10 @@ app.controller('ClientsListCtrl', function($scope, Restangular) {
         {
             field: 'name',
             displayName: 'Nom du client',
-            cellTemplate: '<a href="/clients/{{row.getProperty(\'_id\')}}">{{row.getProperty(col.field)}}</a>'
+            cellTemplate:
+                '<div class="ngCellText" ng-class="col.colIndex()"><span ng-cell-text>' +
+                '<a href="/clients/{{row.getProperty(\'_id\')}}">{{row.getProperty(col.field)}}</a>' +
+                '</span></div>'
         },
         {
             field: 'contacts',
@@ -31,7 +34,7 @@ app.controller('ClientsListCtrl', function($scope, Restangular) {
             cellTemplate: '<ul><li ng-repeat="contact in row.getProperty(col.field)">{{contact.email}}</li></ul>'
         },
         {
-            field: 'modified_on',
+            field: 'modifiedOn',
             displayName: 'Dernière modif',
             cellFilter: 'date:"shortDate"'
         }
