@@ -101,14 +101,20 @@ app.controller('FabricationDetailCtrl', function($scope, $window, $location, $fi
         var original = fabrication;
         $scope.fabrication = Restangular.copy(original);
 
-        $scope.fabStartDate = new Date($scope.fabrication.fabStartDate);
-        $scope.fabStartHour = $filter('date')($scope.fabrication.fabStartDate, 'HH');
+        if ($scope.fabrication.fabStartDate) {
+            $scope.fabStartDate = new Date($scope.fabrication.fabStartDate);
+            $scope.fabStartHour = $filter('date')($scope.fabrication.fabStartDate, 'HH');
+        }
 
-        $scope.fabEndDate = new Date($filter('date')($scope.fabrication.fabEndDate, 'yyyy-MM-dd'));
-        $scope.fabEndHour = $filter('date')($scope.fabrication.fabEndDate, 'HH');
+        if ($scope.fabrication.fabEndDate) {
+            $scope.fabEndDate = new Date($filter('date')($scope.fabrication.fabEndDate, 'yyyy-MM-dd'));
+            $scope.fabEndHour = $filter('date')($scope.fabrication.fabEndDate, 'HH');
+        }
 
-        $scope.steDate = new Date($filter('date')($scope.fabrication.steDate, 'yyyy-MM-dd'));
-        $scope.steHour = $filter('date')($scope.fabrication.steDate, 'HH');
+        if ($scope.fabrication.steDate) {
+            $scope.steDate = new Date($filter('date')($scope.fabrication.steDate, 'yyyy-MM-dd'));
+            $scope.steHour = $filter('date')($scope.fabrication.steDate, 'HH');
+        }
     }
 
 
