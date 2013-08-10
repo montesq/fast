@@ -46,7 +46,11 @@ app.controller('FabricationsListCtrl', function($scope, Restangular) {
         },
         {
             field: 'clientOrderId',
-            displayName: 'N° d\'ordre'
+            displayName: 'N° de commande'
+        },
+        {
+            field: 'clientInfo',
+            displayName: 'Info Client/N° lot'
         },
         {
             field: 'fabStartDate',

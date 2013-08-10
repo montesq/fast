@@ -5,7 +5,7 @@
            <div class="control-group" ng-show="fabrication._id">
                <label class="control-label" for="id">N° ordre</label>
                <div class="controls">
-                   <input id="id" name="id" ng-model="fabrication._id" disabled>
+                   <input id="id" name="id" ng-model="fabrication._id" type="text" disabled>
                </div>
            </div>
 
@@ -16,8 +16,7 @@
                            name="client"
                            ng-options="c._id as c.name for c in clients | orderBy:'name'"
                            ng-model="fabrication.client._id"
-                           required
-                           >
+                           required>
                    </select>
                    <span class="help-inline error" ng-show="fabricationDetailForm.client.$error.required">
                        Obligatoire
@@ -29,6 +28,13 @@
                <label class="control-label" for="clientOrderId">N° de commande</label>
                <div class="controls">
                    <input id="clientOrderId" class="input-small" type="text" ng-model="fabrication.clientOrderId">
+               </div>
+           </div>
+
+           <div class="control-group">
+               <label class="control-label" for="clientInfo">Info client/n° lot</label>
+               <div class="controls">
+                   <input id="clientInfo" name="clientInfo" type="text" ng-model="fabrication.clientInfo">
                </div>
            </div>
 
@@ -70,6 +76,6 @@
        </fieldset>
         <div class="form-actions">
             <button type="submit" class="btn btn-primary" ng-click="save()">Enregistrer</button>
-            <a href="/clients" class="btn">Annuler</a>
+            <a href="/fabrications" class="btn">Annuler</a>
         </div>
 </form>
