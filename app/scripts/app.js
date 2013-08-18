@@ -9,6 +9,7 @@ var app = angular.module('myApp', ['auth', 'menu', 'clients', 'fabrications', 'r
 
     RestangularProvider.setBaseUrl('https://localhost:9443/api');
     RestangularProvider.setRestangularFields({id: '_id'});
+    RestangularProvider.setDefaultHttpFields({withCredentials: true});
   }]);
 
 app.run(function($rootScope) {
