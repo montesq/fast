@@ -4,7 +4,15 @@ var app = angular.module('clients', ['ngGrid']).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
         when('/clients', {templateUrl: '/views/clients/list.html', controller: 'ClientsListCtrl'}).
-        when('/clients/add', {templateUrl: '/views/clients/detail.html', controller: 'ClientAddCtrl'}).
+        when('/clients/add', {
+            templateUrl: '/views/clients/detail.html',
+            controller: 'ClientDetailCtrl',
+            resolve: {
+                account: function() {
+                    return new Object();
+                }
+            }
+        }).
         when('/clients/:id', {
             templateUrl: '/views/clients/detail.html',
             controller: 'ClientDetailCtrl',
@@ -50,23 +58,28 @@ app.controller('ClientsListCtrl', function($scope, Restangular) {
     };
 });
 
-app.controller('ClientAddCtrl', function($scope, $location, Restangular) {
-    $scope.account = {};
-    $scope.account.contacts = [];
-    $scope.save = function() {
-        Restangular.all('accounts').post($scope.account).then(function() {
-            $location.path('/clients');
-        });
-    };
-});
-
 app.controller('ClientDetailCtrl', function($scope, $location, account, Restangular) {
-    var original = account;
-    $scope.account = Restangular.copy(original);
+    if (account._id) {
+        var original = account;
+        $scope.account = Restangular.copy(original);
+    } else {
+        $scope.account = account
+        $scope.account.contacts = [];
+    }
 
     $scope.save = function() {
-        $scope.account.put().then(function() {
-            $location.path('/clients');
+        angular.forEach($scope.account.contacts, function(contact) {
+            Restangular.one('users', contact.email + '/fabClient').put()
         });
+
+        if (account._id) {
+            $scope.account.put().then(function() {
+                $location.path('/clients');
+            });
+        } else {
+            Restangular.all('accounts').post($scope.account).then(function() {
+                $location.path('/clients');
+            });
+        }
     };
 });

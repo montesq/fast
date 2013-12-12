@@ -99,7 +99,16 @@ app.controller('FabricationDetailCtrl', function($scope, $window, $location, $fi
         });
     };
 
-    $scope.clients = Restangular.all("accounts").getList();
+    var clients = new Array();
+    Restangular.all("accounts").getList().then(function(accounts){
+        angular.forEach(accounts, function(account){
+            var minAccount = new Object();
+            minAccount._id = account._id;
+            minAccount.name = account.name;
+            clients.push(minAccount);
+        });
+        $scope.clients = clients;
+    });
 
     if (fabrication._id) {
         var original = fabrication;
