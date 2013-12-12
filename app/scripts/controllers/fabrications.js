@@ -24,7 +24,9 @@ var app = angular.module('fabrications', ['ngGrid', 'ui.date']).
     }]);
 
 app.controller('FabricationsListCtrl', function($scope, Restangular) {
-    $scope.myData = Restangular.all('fabrications').getList();
+    Restangular.all('fabrications').getList().then(function(data){
+        $scope.myData = data;
+    });
 
     $scope.getAttachment = function(idFab, idAtt) {
         var url = Restangular.one('fabrications', idFab).one('attachments', idAtt).getRestangularUrl();

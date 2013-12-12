@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('myApp', ['auth', 'menu', 'clients', 'fabrications', 'restangular']).
+var app = angular.module('myApp', ['ngRoute', 'auth', 'menu', 'clients', 'fabrications', 'restangular']).
   config(['$routeProvider',
           '$locationProvider',
           'RestangularProvider',

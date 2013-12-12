@@ -25,7 +25,9 @@ var app = angular.module('clients', ['ngGrid']).
     }]);
 
 app.controller('ClientsListCtrl', function($scope, Restangular) {
-    $scope.myData = Restangular.all('accounts').getList();
+    Restangular.all('accounts').getList().then(function(data){
+       $scope.myData = data;
+    });
 
     $scope.columnsDef = [
         {
