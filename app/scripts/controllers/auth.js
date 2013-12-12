@@ -16,8 +16,9 @@ app.controller('AuthCtrl', function($scope, $rootScope, $http, Restangular) {
     };
 
     $scope.serverVerifyAssertion = function(assertion) {
-        Restangular.all('login').post({'assertion': assertion}).then(function(data) {
+        Restangular.all('tokens').post({'assertion': assertion}).then(function(data) {
             localStorage.setItem('email', data.email);
+            localStorage.setItem('X-Auth-Token', data['X-Auth-Token']);
             window.location.reload();
         }, function(data) {
             navigator.id.logout();
@@ -26,8 +27,9 @@ app.controller('AuthCtrl', function($scope, $rootScope, $http, Restangular) {
     };
 
     $scope.serverLogout = function() {
-        Restangular.all('logout').post().then(function(data) {
+        Restangular.one('tokens', '').remove().then(function(data) {
                 localStorage.removeItem('email');
+                localStorage.removeItem('X-Auth-Token');
                 window.location.reload();
             }, function(data) {
                 console.log('Logout failure: ' + data.toSource());

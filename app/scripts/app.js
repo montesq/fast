@@ -10,6 +10,7 @@ var app = angular.module('myApp', ['ngRoute', 'auth', 'menu', 'clients', 'fabric
     RestangularProvider.setBaseUrl('https://localhost:9443/api');
     RestangularProvider.setRestangularFields({id: '_id'});
     RestangularProvider.setDefaultHttpFields({withCredentials: true});
+    RestangularProvider.setDefaultHeaders({'X-Auth-Token': localStorage.getItem('X-Auth-Token')});
   }]);
 
 app.run(function($rootScope) {
