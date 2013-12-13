@@ -11,6 +11,12 @@ var app = angular.module('myApp', ['ngRoute', 'auth', 'menu', 'clients', 'fabric
     RestangularProvider.setRestangularFields({id: '_id'});
     RestangularProvider.setDefaultHttpFields({withCredentials: true});
     RestangularProvider.setDefaultHeaders({'X-Auth-Token': localStorage.getItem('X-Auth-Token')});
+    RestangularProvider.setErrorInterceptor(function(response) {
+        if (response.status == 401) {
+            localStorage.removeItem('email');
+        }
+        return response;
+    });
   }]);
 
 app.run(function($rootScope) {
