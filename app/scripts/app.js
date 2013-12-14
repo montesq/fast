@@ -7,10 +7,14 @@ var app = angular.module('myApp', ['ngRoute', 'auth', 'menu', 'clients', 'fabric
           function($routeProvider, $locationProvider, RestangularProvider) {
     $locationProvider.html5Mode(true);
 
-    RestangularProvider.setBaseUrl('https://localhost:9443/api');
+    RestangularProvider.setBaseUrl('http://localhost:9000/api');
     RestangularProvider.setRestangularFields({id: '_id'});
-    RestangularProvider.setDefaultHttpFields({withCredentials: true});
-    RestangularProvider.setDefaultHeaders({'X-Auth-Token': localStorage.getItem('X-Auth-Token')});
+
+    var token = localStorage.getItem('X-Auth-Token')
+    if (token) {
+      RestangularProvider.setDefaultHeaders({'X-Auth-Token': token});
+    }
+
     RestangularProvider.setErrorInterceptor(function(response) {
         if (response.status == 401) {
             localStorage.removeItem('email');
@@ -20,6 +24,6 @@ var app = angular.module('myApp', ['ngRoute', 'auth', 'menu', 'clients', 'fabric
   }]);
 
 app.run(function($rootScope) {
-  $rootScope.sterapiServer = 'https://localhost:9443';
+  $rootScope.sterapiServer = 'http://localhost:9000/api';
 });
 
