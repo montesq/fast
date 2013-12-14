@@ -18,6 +18,7 @@ var app = angular.module('myApp', ['ngRoute', 'auth', 'menu', 'clients', 'fabric
     RestangularProvider.setErrorInterceptor(function(response) {
         if (response.status == 401) {
             localStorage.removeItem('email');
+            window.location.reload();
         }
         return response;
     });
@@ -26,4 +27,3 @@ var app = angular.module('myApp', ['ngRoute', 'auth', 'menu', 'clients', 'fabric
 app.run(function($rootScope) {
   $rootScope.sterapiServer = 'http://localhost:9000/api';
 });
-
