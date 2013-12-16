@@ -1,16 +1,17 @@
 'use strict';
 
 var app = angular.module('myApp', ['ngRoute', 'auth', 'menu', 'clients', 'fabrications', 'restangular']).
-  config(['$routeProvider',
-          '$locationProvider',
-          'RestangularProvider',
-          function($routeProvider, $locationProvider, RestangularProvider) {
+  config(['$routeProvider', '$locationProvider', 'RestangularProvider', '$compileProvider',
+          function($routeProvider, $locationProvider, RestangularProvider, $compileProvider) {
+    $routeProvider.
+        when('/home', {templateUrl: 'views/home.html'}).
+        otherwise({redirectTo: '/home'});
     $locationProvider.html5Mode(true);
 
     RestangularProvider.setBaseUrl('http://localhost:9000/api');
     RestangularProvider.setRestangularFields({id: '_id'});
 
-    var token = localStorage.getItem('X-Auth-Token')
+    var token = localStorage.getItem('X-Auth-Token');
     if (token) {
       RestangularProvider.setDefaultHeaders({'X-Auth-Token': token});
     }
@@ -21,4 +22,7 @@ var app = angular.module('myApp', ['ngRoute', 'auth', 'menu', 'clients', 'fabric
         }
         return response;
     });
+
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|blob):/);
   }]);
+
