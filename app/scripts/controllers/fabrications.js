@@ -24,36 +24,23 @@ var app = angular.module('fabrications', ['ngGrid', 'ui.date']).
         });
     }]);
 
-app.controller('FabricationsListCtrl', function($scope, Restangular) {
+app.controller('FabricationsListCtrl', function($scope, Restangular, $http) {
 
     Restangular.all('fabrications').getList().then(function(data){
         $scope.myData = data;
     });
 
     $scope.getAttachment = function(idFab, idAtt) {
-        window.URL = window.URL || window.webkitURL;  // Take care of vendor prefixes.
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', Restangular.one('fabrications', idFab).one('attachments', idAtt).getRestangularUrl(), true);
-        var token = localStorage.getItem('X-Auth-Token')
-        xhr.setRequestHeader('X-Auth-Token', token);
-        xhr.responseType = 'blob';
-
-        xhr.onload = function(e) {
-            if (this.status == 200) {
-                var blob = this.response;
-                var url= window.URL.createObjectURL(blob);
-                window.open(url);
-            }
-        };
-        xhr.send();
-
-//        var token = localStorage.getItem('X-Auth-Token');
-//        Restangular.one('fabrications', idFab).one('attachments', idAtt).get().then(function(data) {
-//            var blob = new Blob([data]);
-//            var url = (window.URL || window.webkitURL).createObjectURL(blob);
-//            window.open(url);
-//        });
+        Restangular.one('fabrications', idFab).one('attachments', idAtt).withHttpConfig({responseType: 'blob'}).
+            get().then(function(response) {
+                // trick to set the filename when downloading the file
+                var downloadLink = document.createElement("a");
+                downloadLink.href = (window.URL || window.webkitURL).createObjectURL(response);
+                downloadLink.download = idAtt;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            });
     };
 
     $scope.columnsDef = [
@@ -97,7 +84,7 @@ app.controller('FabricationsListCtrl', function($scope, Restangular) {
             displayName: 'Dossier de fabrication',
             cellTemplate:
                 '<div class="ngCellText" ng-class="col.colIndex()"><span ng-cell-text>' +
-                    '<a href="#" ng-show="row.getProperty(col.field)"' +
+                    '<a href="#" download="test.ods" ng-show="row.getProperty(col.field)"' +
                     'ng-click="getAttachment(row.getProperty(\'_id\'), row.getProperty(\'attachment\'))">Télécharger</a>' +
                     '</span></div>'
         }
