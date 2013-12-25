@@ -1,5 +1,33 @@
 <h1>Liste des Fabrications</h1>
+
 <div>
-    <div class="gridStyle" ng-grid="gridOptions">
-    </div>
+    <input ng-model="query" placeholder="Recherche">
 </div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Client</th>
+        <th>N° de Commande</th>
+        <th>Info client/N° de lot</th>
+        <th>Début fabrication</th>
+        <th>Fin fabrication</th>
+        <th>Date stérilisation</th>
+        <th>Dossier de fabrication</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="fabrication in fabrications | filter:query | orderBy:'-_id'">
+        <td><a ng-href="/fabrications/{{fabrication._id}}">{{fabrication._id}}</a></td>
+        <td>{{fabrication.client.name}}</td>
+        <td>{{fabrication.clientOrderId}}</td>
+        <td>{{fabrication.clientInfo}}</td>
+        <td>{{fabrication.fabStartDate | date:'shortDate'}}</td>
+        <td>{{fabrication.fabEndDate | date:'shortDate'}}</td>
+        <td>{{fabrication.steDate | date:'shortDate'}}</td>
+        <td><a href="#" ng-click="getAttachment(fabrication._id, fabrication.attachment)">
+            {{fabrication.attachment}}</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('fabrications', ['ngGrid', 'ui.date']).
+var app = angular.module('fabrications', ['ui.date']).
     config(['$routeProvider', '$locationProvider',
         function($routeProvider, $locationProvider) {
     $routeProvider.
@@ -27,7 +27,7 @@ var app = angular.module('fabrications', ['ngGrid', 'ui.date']).
 app.controller('FabricationsListCtrl', function($scope, Restangular, $http) {
 
     Restangular.all('fabrications').getList().then(function(data){
-        $scope.myData = data;
+        $scope.fabrications = data;
     });
 
     $scope.getAttachment = function(idFab, idAtt) {
@@ -41,63 +41,6 @@ app.controller('FabricationsListCtrl', function($scope, Restangular, $http) {
                 downloadLink.click();
                 document.body.removeChild(downloadLink);
             });
-    };
-
-    $scope.columnsDef = [
-        {
-            field: '_id',
-            displayName: 'N° Fabrication',
-            cellTemplate:
-                '<div class="ngCellText" ng-class="col.colIndex()"><span ng-cell-text>' +
-                '<a href="/fabrications/{{row.getProperty(col.field)}}">{{row.getProperty(col.field)}}</a>' +
-                '</span></div>'
-        },
-        {
-            field: 'client.name',
-            displayName: 'Client'
-        },
-        {
-            field: 'clientOrderId',
-            displayName: 'N° de commande'
-        },
-        {
-            field: 'clientInfo',
-            displayName: 'Info Client/N° lot'
-        },
-        {
-            field: 'fabStartDate',
-            displayName: 'Début fabrication',
-            cellFilter: 'date:"short"'
-        },
-        {
-            field: 'fabEndDate',
-            displayName: 'Fin fabrication',
-            cellFilter: 'date:"short"'
-        },
-        {
-            field: 'steDate',
-            displayName: 'Date stérilisation',
-            cellFilter: 'date:"short"'
-        },
-        {
-            field: 'attachment',
-            displayName: 'Dossier de fabrication',
-            cellTemplate:
-                '<div class="ngCellText" ng-class="col.colIndex()"><span ng-cell-text>' +
-                    '<a href="#" download="test.ods" ng-show="row.getProperty(col.field)"' +
-                    'ng-click="getAttachment(row.getProperty(\'_id\'), row.getProperty(\'attachment\'))">Télécharger</a>' +
-                    '</span></div>'
-        }
-    ];
-
-    $scope.gridOptions = {
-        data : 'myData',
-        columnDefs: 'columnsDef',
-        rowHeight: 60,
-        enableRowSelection: false,
-        showFooter: true,
-        showFilter: true,
-        sortInfo: {fields: ['_id'], directions: ['desc']}
     };
 });
 
