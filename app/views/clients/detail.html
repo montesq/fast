@@ -17,7 +17,7 @@
                    <ul>
                        <li ng-repeat="contact in account.contacts">
                            <input ng-model="contact.email">
-                           [<a href ng-click="account.contacts.splice($index, 1)">X</a>]
+                           [<a href ng-click="removeContact()">X</a>]
                        </li>
                        <li>
                            [<a href ng-click="account.contacts.push({})">add</a>]

@@ -69,19 +69,36 @@ app.controller('ClientDetailCtrl', function($scope, $location, account, Restangu
         $scope.account.contacts = [];
     }
 
-    $scope.save = function() {
+    $scope.saveContacts = function() {
         angular.forEach($scope.account.contacts, function(contact) {
-            Restangular.one('users', contact.email + '/fabClient').put()
+            Restangular.one('users', contact.email.toLowerCase()).
+                one('accounts', account._id).
+                one('profiles', 'FABRICATION_CLIENT').
+                put()
         });
+    }
 
-        if (account._id) {
+    $scope.removeContact = function() {
+        if ($scope.account._id) {
+            Restangular.one('users', this.contact.email.toLowerCase()).
+                one('accounts', $scope.account._id).
+                one('profiles', 'FABRICATION_CLIENT').remove()
+        }
+        $scope.account.contacts.splice(this.$index, 1);
+    };
+
+    $scope.save = function() {
+
+        if ($scope.account._id) {
             $scope.account.put().then(function() {
-                $location.path('/clients');
+                $scope.saveContacts();
             });
         } else {
-            Restangular.all('accounts').post($scope.account).then(function() {
-                $location.path('/clients');
+            Restangular.all('accounts').post($scope.account).then(function(data) {
+                $scope.account._id = data._id;
+                $scope.saveContacts();
             });
         }
+        $location.path('/clients');
     };
 });
