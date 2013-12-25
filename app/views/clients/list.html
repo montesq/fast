@@ -1,5 +1,24 @@
 <h1>Liste des Clients</h1>
 <div>
-    <div class="gridStyle" ng-grid="gridOptions">
-    </div>
+<input ng-model="query" placeholder="Search">
 </div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Nom du client</th>
+        <th>Contacts</th>
+        <th>Dernière modif.</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="account in accounts | filter:query | orderBy:name">
+        <td><a ng-href="/clients/{{account._id}}">{{account.name}}</a></td>
+        <td>
+            <ul ng-repeat="contact in account.contacts" class="unstyled">
+                <li>{{contact.email}}</li>
+            </ul>
+        </td>
+        <td>{{account.modifiedOn | date:'shortDate'}}</td>
+    </tr>
+    </tbody>
+</table>

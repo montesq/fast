@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('clients', ['ngGrid']).
+var app = angular.module('clients', []).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
         when('/clients', {templateUrl: '/views/clients/list.html', controller: 'ClientsListCtrl'}).
@@ -26,38 +26,8 @@ var app = angular.module('clients', ['ngGrid']).
 
 app.controller('ClientsListCtrl', function($scope, Restangular) {
     Restangular.all('accounts').getList().then(function(data){
-       $scope.myData = data;
+        $scope.accounts = data;
     });
-
-    $scope.columnsDef = [
-        {
-            field: 'name',
-            displayName: 'Nom du client',
-            cellTemplate:
-                '<div class="ngCellText" ng-class="col.colIndex()"><span ng-cell-text>' +
-                '<a href="/clients/{{row.getProperty(\'_id\')}}">{{row.getProperty(col.field)}}</a>' +
-                '</span></div>'
-        },
-        {
-            field: 'contacts',
-            displayName: 'Contacts',
-            cellTemplate: '<ul><li ng-repeat="contact in row.getProperty(col.field)">{{contact.email}}</li></ul>'
-        },
-        {
-            field: 'modifiedOn',
-            displayName: 'Dernière modif',
-            cellFilter: 'date:"shortDate"'
-        }
-    ];
-
-    $scope.gridOptions = {
-        data : 'myData',
-        columnDefs: 'columnsDef',
-        rowHeight: 60,
-        enableRowSelection: false,
-        showFooter: true,
-        showFilter: true
-    };
 });
 
 app.controller('ClientDetailCtrl', function($scope, $location, account, Restangular) {
