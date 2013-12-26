@@ -14,13 +14,13 @@
            <div class="control-group">
                <label class="control-label">Contacts: </label>
                <div class="controls">
-                   <ul>
+                   <ul class="unstyled">
                        <li ng-repeat="contact in account.contacts">
                            <input ng-model="contact.email">
-                           [<a href ng-click="removeContact()">X</a>]
+                           <a class="btn" ng-click="removeContact()">X</a>
                        </li>
                        <li>
-                           [<a href ng-click="account.contacts.push({})">add</a>]
+                           <a class="btn" ng-click="account.contacts.push({})">+</a>
                        </li>
                    </ul>
                </div>
