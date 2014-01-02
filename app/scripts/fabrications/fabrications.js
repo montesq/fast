@@ -4,9 +4,9 @@ var app = angular.module('fabrications', ['ui.date']).
     config(['$routeProvider', '$locationProvider',
         function($routeProvider, $locationProvider) {
     $routeProvider.
-        when('/fabrications', {templateUrl: '/views/fabrications/list.html', controller: 'FabricationsListCtrl'}).
+        when('/fabrications', {templateUrl: '/scripts/fabrications/partials/list.html', controller: 'FabricationsListCtrl'}).
         when('/fabrications/add', {
-            templateUrl: '/views/fabrications/detail.html',
+            templateUrl: '/scripts/fabrications/partials/detail.html',
             controller: 'FabricationDetailCtrl',
             resolve: {
                 fabrication: function() {
@@ -15,7 +15,7 @@ var app = angular.module('fabrications', ['ui.date']).
             }
         }).
         when('/fabrications/:id', {
-            templateUrl: '/views/fabrications/detail.html', controller: 'FabricationDetailCtrl',
+            templateUrl: '/scripts/fabrications/partials/detail.html', controller: 'FabricationDetailCtrl',
             resolve: {
                 fabrication: function(Restangular, $route) {
                     return Restangular.one('fabrications', $route.current.params.id).get();
