@@ -31,20 +31,20 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<div class="navbar">
+<div class="navbar" ng-controller="AuthCtrl">
     <div class="navbar-inner">
         <div class="container">
             <a href="/" class="brand">Steriservices</a>
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li>
+                    <li ng-show="displayFabricationsMenu">
                         <a href="/fabrications">Fabrications</a>
                     </li>
-                    <li>
+                    <li ng-show="displayClientsMenu">
                         <a href="/clients">Clients</a>
                     </li>
                 </ul>
-                <ul class="nav pull-right" ng-controller="AuthCtrl">
+                <ul class="nav pull-right">
                     <li ng-show="!currentUser" ng-click="authRequest()"><a href="#">Connexion</a></li>
                     <li ng-show="currentUser" class="dropdown">
                         <a href="#" class="dropdown-toggle">{{currentUser}}
@@ -79,6 +79,7 @@
 <script src="/scripts/auth/auth.js"></script>
 <script src="/scripts/clients/clients.js"></script>
 <script src="/scripts/fabrications/fabrications.js"></script>
+<script src="/scripts/permissions/permissions.js"></script>
 <!-- endbuild -->
 
 

@@ -1,8 +1,8 @@
 'use strict';
 
-var app = angular.module('auth', []);
+var app = angular.module('auth', ['restangular', 'permissionsModule']);
 
-app.controller('AuthCtrl', function($scope, $rootScope, $http, Restangular) {
+app.controller('AuthCtrl', function($scope, $rootScope, $http, Restangular, Permissions) {
     $scope.currentUser = localStorage.getItem('email');
 
     $scope.authRequest = function() {
@@ -10,6 +10,9 @@ app.controller('AuthCtrl', function($scope, $rootScope, $http, Restangular) {
             siteName: 'Steriservices'
         });
     };
+
+    $scope.displayClientsMenu = Permissions.userHasRight('READ_ACCOUNT');
+    $scope.displayFabricationsMenu = Permissions.userHasRight('READ_FABRICATION');
 
     $scope.authLogout = function() {
         navigator.id.logout();
