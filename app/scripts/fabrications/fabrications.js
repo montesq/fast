@@ -26,11 +26,14 @@ var app = angular.module('fabrications', ['ui.date']).
 
 app.controller('FabricationsListCtrl', function($scope, Restangular, Permissions, $http) {
 
+    Permissions.userHasRight('WRITE_FABRICATION').then(function(result) {
+        $scope.displayFabricationEditLink = result;
+    });
+
+
     Restangular.all('fabrications').getList().then(function(data){
         $scope.fabrications = data;
     });
-
-    $scope.isFabricationEditable = Permissions.userHasRight('WRITE_FABRICATION');
 
     $scope.getAttachment = function(idFab, idAtt) {
         Restangular.one('fabrications', idFab).one('attachments', idAtt).withHttpConfig({responseType: 'blob'}).

@@ -8,7 +8,7 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th ng-show="isFabricationEditable"></th>
+        <th ng-show="displayFabricationEditLink"></th>
         <th>#</th>
         <th>Client</th>
         <th>N° de Commande</th>
@@ -21,7 +21,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="fabrication in fabrications | filter:query | orderBy:'-_id'">
-        <td ng-show="isFabricationEditable">
+        <td ng-show="displayFabricationEditLink">
             <a class="icon-edit" ng-href="/fabrications/{{fabrication._id}}"></a>
         </td>
         <td>{{fabrication._id}}</td>
