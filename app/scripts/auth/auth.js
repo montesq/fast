@@ -2,7 +2,7 @@
 
 var app = angular.module('auth', ['restangular', 'permissionsModule']);
 
-app.controller('AuthCtrl', function($scope, $rootScope, $http, Restangular, Permissions) {
+app.controller('AuthCtrl', function($scope, $rootScope, $http, $timeout, Restangular, Permissions) {
     $scope.currentUser = localStorage.getItem('email');
 
     $scope.authRequest = function() {
@@ -11,8 +11,12 @@ app.controller('AuthCtrl', function($scope, $rootScope, $http, Restangular, Perm
         });
     };
 
-    $scope.displayClientsMenu = Permissions.userHasRight('READ_ACCOUNT');
-    $scope.displayFabricationsMenu = Permissions.userHasRight('READ_FABRICATION');
+    Permissions.userHasRight('READ_ACCOUNT').then(function(result) {
+        $scope.displayClientsMenu = result;
+    });
+    Permissions.userHasRight('READ_FABRICATION').then(function(result) {
+        $scope.displayFabricationsMenu = result;
+    });
 
     $scope.authLogout = function() {
         navigator.id.logout();
@@ -33,6 +37,7 @@ app.controller('AuthCtrl', function($scope, $rootScope, $http, Restangular, Perm
         Restangular.one('tokens', '').remove().then(function(data) {
                 localStorage.removeItem('email');
                 localStorage.removeItem('X-Auth-Token');
+                localStorage.removeItem('profiles');
                 window.location.reload();
             }, function(data) {
                 console.log('Logout failure: ' + data.toSource());
