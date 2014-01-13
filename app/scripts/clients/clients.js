@@ -3,9 +3,9 @@
 var app = angular.module('clients', []).
     config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
-        when('/clients', {templateUrl: '/scripts/clients/partials/list.html', controller: 'ClientsListCtrl'}).
+        when('/clients', {templateUrl: '/views/clients/list.html', controller: 'ClientsListCtrl'}).
         when('/clients/add', {
-            templateUrl: '/scripts/clients/partials/detail.html',
+            templateUrl: '/views/clients/detail.html',
             controller: 'ClientDetailCtrl',
             resolve: {
                 account: function() {
@@ -14,7 +14,7 @@ var app = angular.module('clients', []).
             }
         }).
         when('/clients/:id', {
-            templateUrl: '/scripts/clients/partials/detail.html',
+            templateUrl: '/views/clients/detail.html',
             controller: 'ClientDetailCtrl',
             resolve: {
                 account: function(Restangular, $route){

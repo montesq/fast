@@ -4,9 +4,9 @@ var app = angular.module('fabrications', ['ui.date']).
     config(['$routeProvider', '$locationProvider',
         function($routeProvider, $locationProvider) {
     $routeProvider.
-        when('/fabrications', {templateUrl: '/scripts/fabrications/partials/list.html', controller: 'FabricationsListCtrl'}).
+        when('/fabrications', {templateUrl: '/views/fabrications/list.html', controller: 'FabricationsListCtrl'}).
         when('/fabrications/add', {
-            templateUrl: '/scripts/fabrications/partials/detail.html',
+            templateUrl: '/views/fabrications/detail.html',
             controller: 'FabricationDetailCtrl',
             resolve: {
                 fabrication: function() {
