@@ -1,8 +1,8 @@
 'use strict';
 
 var app = angular.module('fabrications', ['ui.date']).
-    config(['$routeProvider', '$locationProvider',
-        function($routeProvider, $locationProvider) {
+    config(['$routeProvider',
+        function($routeProvider) {
     $routeProvider.
         when('/fabrications', {templateUrl: '/views/fabrications/list.html', controller: 'FabricationsListCtrl'}).
         when('/fabrications/add', {
@@ -10,7 +10,7 @@ var app = angular.module('fabrications', ['ui.date']).
             controller: 'FabricationDetailCtrl',
             resolve: {
                 fabrication: function() {
-                    return new Object();
+                    return {};
                 }
             }
         }).
@@ -24,7 +24,7 @@ var app = angular.module('fabrications', ['ui.date']).
         });
     }]);
 
-app.controller('FabricationsListCtrl', function($scope, Restangular, Permissions, $http) {
+app.controller('FabricationsListCtrl', function($scope, Restangular, Permissions) {
 
     Permissions.userHasRight('WRITE_FABRICATION').then(function(result) {
         $scope.displayFabricationEditLink = result;
@@ -39,7 +39,7 @@ app.controller('FabricationsListCtrl', function($scope, Restangular, Permissions
         Restangular.one('fabrications', idFab).one('attachments', idAtt).withHttpConfig({responseType: 'blob'}).
             get().then(function(response) {
                 // trick to set the filename when downloading the file
-                var downloadLink = document.createElement("a");
+                var downloadLink = document.createElement('a');
                 downloadLink.href = (window.URL || window.webkitURL).createObjectURL(response);
                 downloadLink.download = idAtt;
                 document.body.appendChild(downloadLink);
@@ -59,10 +59,10 @@ app.controller('FabricationDetailCtrl', function($scope, $window, $location, $fi
         });
     };
 
-    var clients = new Array();
-    Restangular.all("accounts").getList().then(function(accounts){
+    var clients = [];
+    Restangular.all('accounts').getList().then(function(accounts){
         angular.forEach(accounts, function(account){
-            var minAccount = new Object();
+            var minAccount = {};
             minAccount._id = account._id;
             minAccount.name = account.name;
             clients.push(minAccount);
@@ -123,9 +123,9 @@ app.controller('FabricationDetailCtrl', function($scope, $window, $location, $fi
             });
         } else {
             if ($scope.theFile) {
-                var headers = new Object();
+                var headers = {};
                 headers['Content-Type'] = $scope.theFile.type;
-                var queryParams = new Object();
+                var queryParams = {};
                 queryParams.name = $scope.theFile.name;
 
                 Restangular.

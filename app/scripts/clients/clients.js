@@ -1,7 +1,7 @@
 'use strict';
 
 var app = angular.module('clients', []).
-    config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    config(['$routeProvider', function($routeProvider) {
     $routeProvider.
         when('/clients', {templateUrl: '/views/clients/list.html', controller: 'ClientsListCtrl'}).
         when('/clients/add', {
@@ -9,7 +9,7 @@ var app = angular.module('clients', []).
             controller: 'ClientDetailCtrl',
             resolve: {
                 account: function() {
-                    return new Object();
+                    return {};
                 }
             }
         }).
@@ -35,7 +35,7 @@ app.controller('ClientDetailCtrl', function($scope, $location, account, Restangu
         var original = account;
         $scope.account = Restangular.copy(original);
     } else {
-        $scope.account = account
+        $scope.account = account;
         $scope.account.contacts = [];
     }
 
@@ -44,15 +44,15 @@ app.controller('ClientDetailCtrl', function($scope, $location, account, Restangu
             Restangular.one('users', contact.email.toLowerCase()).
                 one('accounts', account._id).
                 one('profiles', 'FABRICATION_CLIENT').
-                put()
+                put();
         });
-    }
+    };
 
     $scope.removeContact = function() {
         if ($scope.account._id) {
             Restangular.one('users', this.contact.email.toLowerCase()).
                 one('accounts', $scope.account._id).
-                one('profiles', 'FABRICATION_CLIENT').remove()
+                one('profiles', 'FABRICATION_CLIENT').remove();
         }
         $scope.account.contacts.splice(this.$index, 1);
     };

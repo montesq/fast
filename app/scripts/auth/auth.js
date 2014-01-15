@@ -34,7 +34,7 @@ app.controller('AuthCtrl', function($scope, $rootScope, $http, $timeout, Restang
     };
 
     $scope.serverLogout = function() {
-        Restangular.one('tokens', '').remove().then(function(data) {
+        Restangular.one('tokens', '').remove().then(function() {
                 localStorage.removeItem('email');
                 localStorage.removeItem('X-Auth-Token');
                 localStorage.removeItem('profiles');

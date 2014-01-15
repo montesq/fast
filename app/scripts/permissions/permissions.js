@@ -8,9 +8,9 @@ app.factory('Permissions', ['$filter', '$q', 'Restangular', function($filter, $q
         var filteredProfiles = $filter('filter')(
             profiles,
             function(value) {
-                return value.rights.indexOf(right) != -1
-            })
-        return filteredProfiles.length != 0;
+                return value.rights.indexOf(right) !== -1;
+            });
+        return filteredProfiles.length !== 0;
     };
 
     var userHasRight = function(right) {
@@ -30,5 +30,5 @@ app.factory('Permissions', ['$filter', '$q', 'Restangular', function($filter, $q
 
     return {
         userHasRight: userHasRight
-    }
+    };
 }]);
