@@ -263,6 +263,18 @@ AddDefaultCharset utf-8
     RewriteRule ^(.*)       /index.html/#/$1
 </IfModule>
 
+# ------------------------------------------------------------------------------
+# | CleanURLs for html5mode                                                    |
+# ------------------------------------------------------------------------------
+
+<ifModule mod_rewrite.c>
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !index
+    RewriteCond %{REQUEST_URI} !.*\.(js|html|png|css)
+    RewriteRule (.*) index.html [L]
+</ifModule>
+
 
 # ##############################################################################
 # # SECURITY                                                                   #
