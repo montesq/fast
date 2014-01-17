@@ -24,13 +24,14 @@ var app = angular.module('clients', []).
         });
     }]);
 
-app.controller('ClientsListCtrl', function($scope, Restangular) {
+app.controller('ClientsListCtrl', ['$scope', 'Restangular', function($scope, Restangular) {
     Restangular.all('accounts').getList().then(function(data){
         $scope.accounts = data;
     });
-});
+}]);
 
-app.controller('ClientDetailCtrl', function($scope, $location, account, Restangular) {
+app.controller('ClientDetailCtrl', ['$scope', '$location', 'account', 'Restangular',
+    function($scope, $location, account, Restangular) {
     if (account._id) {
         var original = account;
         $scope.account = Restangular.copy(original);
@@ -71,4 +72,4 @@ app.controller('ClientDetailCtrl', function($scope, $location, account, Restangu
         }
         $location.path('/clients');
     };
-});
+}]);

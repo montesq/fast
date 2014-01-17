@@ -2,7 +2,8 @@
 
 var app = angular.module('auth', ['restangular', 'permissionsModule']);
 
-app.controller('AuthCtrl', function($scope, $rootScope, $http, $timeout, Restangular, Permissions) {
+app.controller('AuthCtrl', ['$scope', 'Restangular', 'Permissions',
+    function($scope, Restangular, Permissions) {
     $scope.currentUser = localStorage.getItem('email');
 
     $scope.authRequest = function() {
@@ -50,4 +51,4 @@ app.controller('AuthCtrl', function($scope, $rootScope, $http, $timeout, Restang
         onlogin: $scope.serverVerifyAssertion,
         onlogout: $scope.serverLogout
     });
-});
+}]);

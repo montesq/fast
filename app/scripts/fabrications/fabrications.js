@@ -15,7 +15,7 @@ var app = angular.module('fabrications', ['ui.date']).
             }
         }).
         when('/fabrications/:id', {
-            templateUrl: '/scripts/fabrications/partials/detail.html', controller: 'FabricationDetailCtrl',
+            templateUrl: '/views/fabrications/detail.html', controller: 'FabricationDetailCtrl',
             resolve: {
                 fabrication: function(Restangular, $route) {
                     return Restangular.one('fabrications', $route.current.params.id).get();
@@ -24,7 +24,8 @@ var app = angular.module('fabrications', ['ui.date']).
         });
     }]);
 
-app.controller('FabricationsListCtrl', function($scope, Restangular, Permissions) {
+app.controller('FabricationsListCtrl', ['$scope', 'Restangular', 'Permissions',
+    function($scope, Restangular, Permissions) {
 
     Permissions.userHasRight('WRITE_FABRICATION').then(function(result) {
         $scope.displayFabricationEditLink = result;
@@ -47,10 +48,11 @@ app.controller('FabricationsListCtrl', function($scope, Restangular, Permissions
                 document.body.removeChild(downloadLink);
             });
     };
-});
+}]);
 
 
-app.controller('FabricationDetailCtrl', function($scope, $window, $location, $filter, fabrication, Restangular) {
+app.controller('FabricationDetailCtrl', ['$scope', '$window', '$location', '$filter', 'fabrication', 'Restangular',
+    function($scope, $window, $location, $filter, fabrication, Restangular) {
     // This is used to get the file in the form
     window.scope = $scope;
     $scope.setFile = function(element) {
@@ -139,4 +141,4 @@ app.controller('FabricationDetailCtrl', function($scope, $window, $location, $fi
             });
         }
     };
-});
+}]);
